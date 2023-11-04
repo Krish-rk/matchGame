@@ -1,14 +1,11 @@
-import {Component} from 'react'
-import Category from '../Category'
-import ImagesCard from '../ImagesCard'
-
-const tabsList = [
+// These are the lists used in the application. You can move them to any component needed.
+export const tabsList = [
   {tabId: 'FRUIT', displayText: 'Fruits'},
   {tabId: 'ANIMAL', displayText: 'Animals'},
   {tabId: 'PLACE', displayText: 'Places'},
 ]
 
-const imagesList = [
+export const imagesList = [
   {
     id: 'b11ec8ce-35c9-4d67-a7f7-07516d0d8186',
     imageUrl:
@@ -248,77 +245,4 @@ const imagesList = [
   },
 ]
 
-class GameCard extends Component {
-  state = {
-    category: Fruits,
-    score: 0,
-    seconds: 60,
-  }
-
-  componentDidMount() {
-    this.timerId = setinterval(this.changeTime, 1000)
-  }
-
-  changeTime = () => {
-    const {onGameOver} = this.props
-    const {seconds} = this.state
-    if (seconds !== 0) {
-      this.setState({
-        seconds: seconds - 1,
-      })
-    } else {
-      onGameOver()
-    }
-  }
-
-  ComponentWillUnMount() {
-    clearInterval(this.timerId)
-  }
-
-  changeCategory = id => {
-    this.setState({
-      category: id,
-    })
-  }
-
-  render() {
-    const {category} = this.state
-    const {score, onGameOver} = this.props
-    const randomNumber = Math.floor(Math.random() * imagesList.length)
-    const thumbnail = imagesList[randomNumber]
-    const newImagesLists = imagesList.filter(each => each.category !== category)
-    const checkImage= (id)=>{
-            if(id=== thumbnail.id){
-                this.setState(prev=>({
-                    score: prev.score+1
-                })
-            }
-            
-            else{
-                onGameOver()
-               }
-        }
-
-    return (
-      <div>
-        <div>
-          <img src={thumbnail.thumbnailUrl} alt="thumbail" />
-        </div>
-        <ul>
-          {tabsList.map(each => (
-            <Category key={each.id} item={each} />
-          ))}
-        </ul>
-        <div>
-          <ul>
-            {newImagesLists.map(each => (
-              <ImagesCard key={each.id} item={each} checkImage={checkImage} />
-            ))}
-          </ul>
-        </div>
-      </div>
-    )
-  }
-}
-
-export default GameCard
+export default null
